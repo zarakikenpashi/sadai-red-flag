@@ -119,3 +119,29 @@ export async function insertTestimonial(input: TestimonialInput) {
 
   redirect("/temoigner?success=1");
 }
+
+export async function getUserTestimonials(userId: string) {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("testimonials")
+    .select(
+      "id,title,body,employment_status,duration_label,period_label,moderation_status,moderator_note,created_at,companies(name,slug)",
+    )
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error || !data) return [];
+
+  return data.map((item) => ({
+    id: item.id,
+    title: item.title,
+    body: item.body,
+    employment_status: item.employment_status,
+    duration_label: item.duration_label ?? "",
+    period_label: item.period_label ?? "",
+    moderation_status: item.moderation_status,
+    moderator_note: item.moderator_note ?? "",
+    created_at: item.created_at,
+    company: Array.isArray(item.companies) ? item.companies[0] : item.companies,
+  }));
+}
