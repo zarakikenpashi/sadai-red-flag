@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import type { CompanySearchResult } from "@/lib/companies";
+import { scanPublicationText } from "@/lib/content-safety";
 import { createTestimonial } from "./actions";
 
 const steps = [
@@ -43,7 +45,9 @@ type Props = {
 
 export function TestimonialForm({ companies }: Props) {
   const [step, setStep] = useState(1);
+  const [body, setBody] = useState("");
   const progress = useMemo(() => `${Math.round((step / steps.length) * 100)}%`, [step]);
+  const safety = useMemo(() => scanPublicationText(body), [body]);
 
   return (
     <form action={createTestimonial} className="mt-8 grid gap-6">
@@ -186,6 +190,15 @@ export function TestimonialForm({ companies }: Props) {
       <section className="grid gap-5">
         <Card>
           <h2 className="text-2xl font-black">Étape 5 : titre, texte, confirmations</h2>
+          <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4">
+            <p className="text-sm font-black uppercase tracking-[0.2em] text-amber-700">
+              Règles affichées avant soumission
+            </p>
+            <p className="mt-2 text-sm font-bold text-slate-700">
+              Ne cite pas de personnes physiques, retire les données personnelles,
+              évite les insultes et consulte les <Link className="text-red-flag underline" href="/regles">règles de publication</Link>.
+            </p>
+          </div>
           <div className="mt-5 grid gap-4">
             <label className="grid gap-2 text-sm font-bold text-slate-700">
               Titre
@@ -198,10 +211,20 @@ export function TestimonialForm({ companies }: Props) {
                 maxLength={5000}
                 minLength={20}
                 name="body"
+                onChange={(event) => setBody(event.target.value)}
                 placeholder="Décris des faits observables, sans insultes ni données personnelles."
                 required
+                value={body}
               />
             </label>
+            {safety.hasWarning ? (
+              <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-bold text-red-flag">
+                <p>Termes sensibles détectés : reste factuel et anonymise ton texte.</p>
+                {safety.forbiddenMatches.length ? <p>Termes interdits : {safety.forbiddenMatches.join(", ")}</p> : null}
+                {safety.sensitiveMatches.length ? <p>Termes sensibles : {safety.sensitiveMatches.join(", ")}</p> : null}
+                {safety.personNameWarning ? <p>Ne cite pas de personnes physiques.</p> : null}
+              </div>
+            ) : null}
             <label className="flex items-start gap-3 rounded-2xl bg-slate-50 p-4 text-sm font-bold text-slate-700">
               <input name="confirm_truthful" required type="checkbox" />
               Je confirme que ce témoignage décrit mon expérience réelle et de bonne foi.
@@ -209,6 +232,10 @@ export function TestimonialForm({ companies }: Props) {
             <label className="flex items-start gap-3 rounded-2xl bg-slate-50 p-4 text-sm font-bold text-slate-700">
               <input name="confirm_no_personal_data" required type="checkbox" />
               Je confirme ne pas publier de noms de personnes, insultes ou données personnelles.
+            </label>
+            <label className="flex items-start gap-3 rounded-2xl bg-slate-50 p-4 text-sm font-bold text-slate-700">
+              <input name="accept_publication_rules" required type="checkbox" />
+              J’accepte les règles de publication et le passage en modération avant publication.
             </label>
           </div>
         </Card>

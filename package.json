@@ -18,7 +18,8 @@
     "verify:company-profile": "node scripts/verify-company-profile.mjs",
     "verify:propose-company": "node scripts/verify-propose-company.mjs",
     "verify:auth": "node scripts/verify-auth.mjs",
-    "verify:testimonial-form": "node scripts/verify-testimonial-form.mjs"
+    "verify:testimonial-form": "node scripts/verify-testimonial-form.mjs",
+    "verify:publication-rules": "node scripts/verify-publication-rules.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

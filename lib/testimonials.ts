@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { FORBIDDEN_TERMS, scanPublicationText } from "@/lib/content-safety";
 
 export type TestimonialInput = {
   company_id: string;
@@ -64,6 +65,13 @@ export async function insertTestimonial(input: TestimonialInput) {
     throw new Error("Le témoignage doit faire entre 20 et 5000 caractères.");
   }
 
+  const publicationSafety = scanPublicationText(input.body);
+  if (publicationSafety.forbiddenMatches.length) {
+    throw new Error(
+      `Retire les insultes ou accusations directes avant soumission. Termes MVP: ${FORBIDDEN_TERMS.join(", ")}`,
+    );
+  }
+
   for (const [key, value] of Object.entries(input.scores)) assertScore(value, key);
 
   const uniqueFlags = [...new Set(input.flag_types)].filter((flag) => redFlagTypes.has(flag));
@@ -82,6 +90,9 @@ export async function insertTestimonial(input: TestimonialInput) {
       body: input.body.trim(),
       verification_status: "declared",
       moderation_status: "pending",
+      moderator_note: publicationSafety.sensitiveMatches.length || publicationSafety.personNameWarning
+        ? `Alerte garde-fous texte: sensibles=${publicationSafety.sensitiveMatches.join(", ") || "aucun"}; personne_physique=${publicationSafety.personNameWarning ? "oui" : "non"}`
+        : null,
     })
     .select("id")
     .single();

@@ -14,8 +14,9 @@ export async function createTestimonial(formData: FormData) {
 
   const confirmTruthful = formData.get("confirm_truthful") === "on";
   const confirmNoPersonalData = formData.get("confirm_no_personal_data") === "on";
+  const acceptPublicationRules = formData.get("accept_publication_rules") === "on";
 
-  if (!confirmTruthful || !confirmNoPersonalData) {
+  if (!confirmTruthful || !confirmNoPersonalData || !acceptPublicationRules) {
     redirect("/temoigner?error=confirmations");
   }
 
