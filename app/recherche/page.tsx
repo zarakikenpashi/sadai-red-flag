@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PublicHeader } from "@/components/layout/public-header";
 import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
 import { Badge } from "@/components/ui/badge";
@@ -60,9 +61,9 @@ export default async function SearchPage({
             {companies.length} résultat{companies.length > 1 ? "s" : ""}
             {query ? ` pour “${query}”` : ""}
           </p>
-          <a className="text-sm font-bold text-red-flag" href="/temoigner">
+          <Link className="text-sm font-bold text-red-flag" href="/entreprises/proposer">
             Proposer cette entreprise
-          </a>
+          </Link>
         </div>
 
         {companies.length ? (
@@ -107,9 +108,9 @@ export default async function SearchPage({
               Cette entreprise n’est pas encore référencée. Tu peux proposer sa fiche
               et aider la communauté à commencer la collecte.
             </p>
-            <a className="mt-5 inline-flex" href="/temoigner">
+            <Link className="mt-5 inline-flex" href="/entreprises/proposer">
               <Button>Proposer cette entreprise</Button>
-            </a>
+            </Link>
           </Card>
         )}
       </main>
