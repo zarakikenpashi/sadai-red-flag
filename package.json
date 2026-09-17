@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "verify:ui": "node scripts/verify-ui-base.mjs",
     "verify:supabase": "node scripts/verify-supabase.mjs",
-    "verify:schema": "node scripts/verify-schema.mjs"
+    "verify:schema": "node scripts/verify-schema.mjs",
+    "verify:rls": "node scripts/verify-rls.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
