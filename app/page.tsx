@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
 import { PublicHeader } from "@/components/layout/public-header";
 import { Badge } from "@/components/ui/badge";
@@ -58,6 +59,11 @@ export default function Home() {
                   Raconter mon expérience
                 </Button>
               </a>
+              <Link href="/entreprises/proposer">
+                <Button className="w-full" size="lg" variant="secondary">
+                  Proposer une entreprise
+                </Button>
+              </Link>
               <a href="#top">
                 <Button className="w-full" size="lg" variant="secondary">
                   Voir le top red flags
