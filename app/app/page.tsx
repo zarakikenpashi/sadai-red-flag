@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
 import { PublicHeader } from "@/components/layout/public-header";
@@ -39,8 +40,22 @@ export default async function AppDashboardPage() {
           </Card>
           <Card>
             <p className="text-sm font-bold text-slate-500">Témoignages</p>
-            <p className="mt-2 font-black">Bientôt disponible</p>
+            <p className="mt-2 font-black">Mes contributions</p>
+            <Link className="mt-4 inline-flex" href="/app/mes-temoignages">
+              <Button size="sm" variant="secondary">
+                Mes témoignages
+              </Button>
+            </Link>
           </Card>
+        </div>
+
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link href="/temoigner">
+            <Button>Témoigner</Button>
+          </Link>
+          <Link href="/app/mes-temoignages">
+            <Button variant="secondary">Mes témoignages</Button>
+          </Link>
         </div>
 
         <form action={signOutAction} className="mt-8">
