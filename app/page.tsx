@@ -28,9 +28,10 @@ export default function Home() {
               un job ou un entretien.
             </p>
 
-            <div
-              id="recherche"
+            <form
+              action="/recherche"
               className="mt-8 rounded-3xl bg-white p-3 shadow-2xl shadow-slate-200"
+              id="recherche"
             >
               <label className="sr-only" htmlFor="company-search">
                 Chercher une entreprise
@@ -38,15 +39,16 @@ export default function Home() {
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Input
                   id="company-search"
+                  name="q"
                   className="flex-1"
                   placeholder="Cherche une entreprise avant de signer..."
                   type="search"
                 />
-                <Button size="lg" variant="dark">
+                <Button size="lg" type="submit" variant="dark">
                   Rechercher
                 </Button>
               </div>
-            </div>
+            </form>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <a
