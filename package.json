@@ -20,7 +20,8 @@
     "verify:auth": "node scripts/verify-auth.mjs",
     "verify:testimonial-form": "node scripts/verify-testimonial-form.mjs",
     "verify:publication-rules": "node scripts/verify-publication-rules.mjs",
-    "verify:user-testimonials": "node scripts/verify-user-testimonials.mjs"
+    "verify:user-testimonials": "node scripts/verify-user-testimonials.mjs",
+    "verify:admin-moderation": "node scripts/verify-admin-moderation.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
