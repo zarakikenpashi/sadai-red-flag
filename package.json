@@ -12,7 +12,8 @@
     "verify:supabase": "node scripts/verify-supabase.mjs",
     "verify:schema": "node scripts/verify-schema.mjs",
     "verify:rls": "node scripts/verify-rls.mjs",
-    "verify:seed": "node scripts/verify-seed.mjs"
+    "verify:seed": "node scripts/verify-seed.mjs",
+    "verify:home": "node scripts/verify-home.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
