@@ -1,24 +1,14 @@
+import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
+import { PublicHeader } from "@/components/layout/public-header";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, Panel } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#0B0F14]">
-      <header className="border-b border-slate-200 bg-white/85 backdrop-blur">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <a className="text-xl font-black tracking-tight" href="#hero">
-            🚩 RED FLAG
-          </a>
-          <div className="hidden items-center gap-6 text-sm font-semibold text-slate-600 md:flex">
-            <a href="#recherche">Recherche</a>
-            <a href="#top">Top Red Flags</a>
-            <a href="#regles">Règles</a>
-          </div>
-          <a
-            className="rounded-full bg-[#EF233C] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-[#D90429]"
-            href="#temoigner"
-          >
-            Témoigner
-          </a>
-        </nav>
-      </header>
+    <div className="min-h-screen bg-soft-white pb-24 text-ink-black md:pb-0">
+      <PublicHeader />
 
       <main>
         <section
@@ -26,9 +16,9 @@ export default function Home() {
           className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-[1.1fr_0.9fr] md:py-24"
         >
           <div className="flex flex-col justify-center">
-            <p className="mb-4 w-fit rounded-full bg-red-50 px-4 py-2 text-sm font-bold text-[#EF233C]">
+            <Badge className="mb-4" tone="red">
               Transparence professionnelle • Abidjan d’abord
-            </p>
+            </Badge>
             <h1 className="max-w-4xl text-5xl font-black leading-[1.02] tracking-tight md:text-7xl">
               Avant de signer, vérifie l’entreprise.
             </h1>
@@ -38,53 +28,56 @@ export default function Home() {
               un job ou un entretien.
             </p>
 
-            <div id="recherche" className="mt-8 rounded-3xl bg-white p-3 shadow-2xl shadow-slate-200">
+            <div
+              id="recherche"
+              className="mt-8 rounded-3xl bg-white p-3 shadow-2xl shadow-slate-200"
+            >
               <label className="sr-only" htmlFor="company-search">
                 Chercher une entreprise
               </label>
               <div className="flex flex-col gap-3 sm:flex-row">
-                <input
+                <Input
                   id="company-search"
-                  className="min-h-14 flex-1 rounded-2xl border border-slate-200 px-5 text-base outline-none transition focus:border-[#EF233C] focus:ring-4 focus:ring-red-100"
+                  className="flex-1"
                   placeholder="Cherche une entreprise avant de signer..."
                   type="search"
                 />
-                <button className="min-h-14 rounded-2xl bg-[#0B0F14] px-6 font-bold text-white transition hover:bg-slate-800">
+                <Button size="lg" variant="dark">
                   Rechercher
-                </button>
+                </Button>
               </div>
             </div>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <a
-                className="rounded-2xl bg-[#EF233C] px-6 py-4 text-center font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-[#D90429]"
                 href="#temoigner"
               >
-                Raconter mon expérience
+                <Button className="w-full" size="lg">
+                  Raconter mon expérience
+                </Button>
               </a>
-              <a
-                className="rounded-2xl border border-slate-200 bg-white px-6 py-4 text-center font-bold transition hover:border-slate-300 hover:bg-slate-50"
-                href="#top"
-              >
-                Voir le top red flags
+              <a href="#top">
+                <Button className="w-full" size="lg" variant="secondary">
+                  Voir le top red flags
+                </Button>
               </a>
             </div>
           </div>
 
-          <aside className="rounded-[2rem] bg-[#0B0F14] p-6 text-white shadow-2xl shadow-slate-300">
-            <div className="rounded-3xl bg-white p-5 text-[#0B0F14]">
+          <aside className="rounded-[2rem] bg-ink-black p-6 text-white shadow-2xl shadow-slate-300">
+            <div className="rounded-3xl bg-white p-5 text-ink-black">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-sm font-bold text-slate-500">Entreprise exemple</p>
                   <h2 className="mt-1 text-2xl font-black">Agence XYZ</h2>
                   <p className="text-sm text-slate-500">Abidjan • Marketing</p>
                 </div>
-                <div className="rounded-2xl bg-red-50 px-4 py-3 text-center text-[#EF233C]">
+                <div className="rounded-2xl bg-red-50 px-4 py-3 text-center text-red-flag">
                   <p className="text-3xl font-black">34</p>
                   <p className="text-xs font-bold">/100</p>
                 </div>
               </div>
-              <p className="mt-5 rounded-2xl bg-red-50 p-4 text-sm font-semibold text-[#8D0B1A]">
+              <p className="mt-5 rounded-2xl bg-red-50 p-4 text-sm font-semibold text-deep-alert">
                 Vigilance élevée — score basé sur 42 expériences publiées.
               </p>
               <div className="mt-5 space-y-3 text-sm">
@@ -110,7 +103,7 @@ export default function Home() {
         <section className="mx-auto max-w-7xl px-6 py-10" id="top">
           <div className="mb-6 flex items-end justify-between gap-4">
             <div>
-              <p className="font-bold text-[#EF233C]">🚨 Ça revient souvent</p>
+              <p className="font-bold text-red-flag">🚨 Ça revient souvent</p>
               <h2 className="mt-2 text-3xl font-black">Signaux à vérifier avant entretien</h2>
             </div>
             <p className="hidden max-w-md text-sm text-slate-500 md:block">
@@ -124,19 +117,19 @@ export default function Home() {
               ["Stage prolongé", "Demande les conditions de fin de stage."],
               ["Contrat flou", "Clarifie salaire, durée et horaires."],
             ].map(([title, body]) => (
-              <article className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm" key={title}>
+              <Card key={title}>
                 <h3 className="text-xl font-black">{title}</h3>
                 <p className="mt-3 text-slate-600">{body}</p>
-              </article>
+              </Card>
             ))}
           </div>
         </section>
 
         <section className="mx-auto max-w-7xl px-6 py-10" id="temoigner">
-          <div className="rounded-[2rem] bg-white p-8 shadow-xl shadow-slate-200 md:p-10">
+          <Panel>
             <div className="grid gap-8 md:grid-cols-[0.9fr_1.1fr]">
               <div>
-                <p className="font-bold text-[#EF233C]">Contribution MVP</p>
+                <p className="font-bold text-red-flag">Contribution MVP</p>
                 <h2 className="mt-2 text-3xl font-black">Raconter sans s’exposer.</h2>
                 <p className="mt-4 leading-7 text-slate-600">
                   Le formulaire MVP sera en 5 étapes : entreprise, statut,
@@ -157,7 +150,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          </div>
+          </Panel>
         </section>
 
         <section className="mx-auto max-w-7xl px-6 py-10" id="regles">
@@ -172,6 +165,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <MobileBottomNav />
     </div>
   );
 }
