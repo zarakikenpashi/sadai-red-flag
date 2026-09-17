@@ -125,6 +125,59 @@ export default function Home() {
           </div>
         </section>
 
+        <section
+          className="mx-auto max-w-7xl px-6 py-10"
+          id="temoignages-recents"
+        >
+          <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <p className="font-bold text-red-flag">Témoignages récents</p>
+              <h2 className="mt-2 text-3xl font-black">
+                Des expériences modérées, pas des rumeurs.
+              </h2>
+            </div>
+            <p className="max-w-xl text-sm leading-6 text-slate-500">
+              Chaque carte est pensée comme un aperçu : statut de vérification,
+              contexte, tags et score communautaire de vigilance.
+            </p>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-3">
+            {[
+              [
+                "Agence Baobab Digital",
+                "Stage prolongé sans vraie visibilité",
+                "Expérience déclarée • Stagiaire • 6 mois",
+                "Stage prolongé",
+              ],
+              [
+                "Studio Lagoon Tech",
+                "Bon apprentissage mais rythme élevé",
+                "Expérience déclarée • CDI • 1 an",
+                "Horaires",
+              ],
+              [
+                "Atelier Cacao Media",
+                "Encadrement sérieux",
+                "Expérience vérifiée • Stagiaire • 4 mois",
+                "Good place",
+              ],
+            ].map(([company, title, meta, flag]) => (
+              <Card key={`${company}-${title}`}>
+                <Badge tone={flag === "Good place" ? "green" : "red"}>
+                  {flag}
+                </Badge>
+                <h3 className="mt-4 text-xl font-black">{title}</h3>
+                <p className="mt-2 text-sm font-semibold text-slate-500">{company}</p>
+                <p className="mt-4 text-sm leading-6 text-slate-600">{meta}</p>
+                <div className="mt-5 flex items-center justify-between text-sm font-bold text-slate-500">
+                  <span>👍 utile</span>
+                  <span>Modération avant publication</span>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </section>
+
         <section className="mx-auto max-w-7xl px-6 py-10" id="temoigner">
           <Panel>
             <div className="grid gap-8 md:grid-cols-[0.9fr_1.1fr]">
