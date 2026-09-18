@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, Panel } from "@/components/ui/card";
 import { getCompanyBySlug, getCompanyTestimonials } from "@/lib/companies";
+import { helpfulVoteAction, reportTestimonialAction } from "./actions";
 
 const categoryLabels = [
   ["pay", "💰 Paiement"],
@@ -58,8 +59,9 @@ export default async function CompanyProfilePage({
               {company.name}
             </h1>
             <p className="mt-3 font-semibold text-slate-500">
-              {company.city} • {company.country} • Fiche non revendiquée
+              {company.city} • {company.country} • {company.claim_status === "approved" ? "Profil officiel" : "Fiche non revendiquée"}
             </p>
+            {company.claim_status === "approved" ? <Badge tone="green">Profil officiel</Badge> : null}
             <p className="mt-6 leading-7 text-slate-600">{company.description}</p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -69,6 +71,11 @@ export default async function CompanyProfilePage({
               <a href={`/entreprises/${company.slug}/revendiquer`}>
                 <Button className="w-full" variant="secondary">
                   Cette entreprise est la vôtre ?
+                </Button>
+              </a>
+              <a href={`/entreprises/${company.slug}/repondre`}>
+                <Button className="w-full" variant="dark">
+                  Répondre officiellement
                 </Button>
               </a>
             </div>
@@ -163,6 +170,37 @@ export default async function CompanyProfilePage({
                     <span>{testimonial.flags.join(" • ")}</span>
                     <span>👍 {testimonial.helpful_count} utiles</span>
                   </div>
+                  <div className="mt-5 grid gap-4 md:grid-cols-2">
+                    <form action={helpfulVoteAction}>
+                      <input name="testimonial_id" type="hidden" value={testimonial.id} />
+                      <input name="company_slug" type="hidden" value={company.slug} />
+                      <Button type="submit" variant="secondary">Utile</Button>
+                    </form>
+                    <form action={reportTestimonialAction} className="grid gap-2 rounded-2xl bg-slate-50 p-4">
+                      <input name="testimonial_id" type="hidden" value={testimonial.id} />
+                      <input name="company_slug" type="hidden" value={company.slug} />
+                      <select className="rounded-xl border border-slate-200 p-3" name="reason" required>
+                        <option value="fake_testimonial">Faux témoignage</option>
+                        <option value="insult">Insulte</option>
+                        <option value="personal_data">Données personnelles</option>
+                        <option value="named_attack">Attaque nominative</option>
+                        <option value="off_topic">Hors sujet</option>
+                        <option value="other">Autre</option>
+                      </select>
+                      <input className="rounded-xl border border-slate-200 p-3" name="comment" placeholder="Commentaire facultatif" />
+                      <Button type="submit" variant="danger">Signaler</Button>
+                    </form>
+                  </div>
+                  {testimonial.responses?.length ? (
+                    <div className="mt-5 grid gap-3">
+                      {testimonial.responses.map((response) => (
+                        <div className="rounded-2xl border border-green-100 bg-green-50 p-4" key={response.id}>
+                          <Badge tone="green">Réponse officielle entreprise</Badge>
+                          <p className="mt-3 leading-7 text-slate-700">{response.body}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
                 </Card>
               ))
             ) : (
